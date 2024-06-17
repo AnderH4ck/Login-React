@@ -1,59 +1,8 @@
-import React, { useState } from "react";
-import {
-  RiMailLine,
-  RiLockLine,
-  RiEyeLine,
-  RiEyeOffLine,
-} from "react-icons/ri";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
-function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const postLogin = async (data) => {
-    try {
-      const res = await axios.post("http://localhost:3000/api/login", data);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onSubmit = (data) => {
-    const { email, password } = data;
-
-    if ([email, password].includes("")) {
-      toast.error("😢 Todos los campos son obligatorios", {
-        theme: "dark",
-      });
-      return;
-    }
-
-    if (password.length < 6) {
-      toast.error("😢 El password debe tener al menos 6 caracteres", {
-        theme: "dark",
-      });
-      return;
-    }
-
-    postLogin(data);
-
-    console.log(data);
-    // Aquí puedes llamar a tu función de autenticación como signin(data) si la tienes definida
-  };
-
+function Register() {
+    
   return (
     <div className="bg-cyan-950 p-8 rounded-xl w-full md:w-96">
         <h4 className="text-white font-bold text-5xl text-center">JAC</h4>
@@ -128,4 +77,4 @@ function Login() {
 }
 
 
-export default Login;
+export default Register;
