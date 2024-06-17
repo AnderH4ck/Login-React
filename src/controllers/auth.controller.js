@@ -2,8 +2,9 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
 
+// Registro de usuario
 export const register = async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, status } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -12,6 +13,7 @@ export const register = async (req, res) => {
       username,
       email,
       password: passwordHash,
+      status,
     });
 
     const userSaved = await newUser.save();
@@ -21,12 +23,14 @@ export const register = async (req, res) => {
       id: userSaved._id,
       username: userSaved.username,
       email: userSaved.email,
+      status: userSaved.status,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+// Inicio de sesión de usuario
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -46,12 +50,14 @@ export const login = async (req, res) => {
       username: userFound.username,
       email: userFound.email,
       password: userFound.password,
+      status: userFound.status,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+// Cerrar sesión de usuario
 export const logout = (req, res) => {
   res.cookie("token", "", {
     expires: new Date(0),
@@ -59,10 +65,11 @@ export const logout = (req, res) => {
   return res.sendStatus(200);
 };
 
+// Perfil de usuario
 export const profile = async (req, res) => {
   const userFound = await User.findById(req.user.id);
 
-  if (!userFound) return res.status(400).json({ message: "user not found" });
+  if (!userFound) return res.status(400).json({ message: "User not found" });
 
   return res.json({
     id: userFound._id,
@@ -70,5 +77,30 @@ export const profile = async (req, res) => {
     email: userFound.email,
     password: userFound.password,
   });
-  res.send("profile");
+};
+
+// Cambiar el estado del usuario (activar/desactivar)
+export const changeUserStatus = async (req, res) => {
+  const { username, email, status } = req.body;
+
+  console.log("Request Body:", req.body); // Log para depuración
+
+  try {
+    const user = await User.findOne({ username, email });
+    if (!user) {
+      console.log("User not found"); // Log para depuración
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("User found:", user); // Log para depuración
+
+    user.status = status;
+    await user.save();
+
+    console.log("User status updated successfully true"); // Log para depuración
+    res.json({ message: "User status updated successfully true" });
+  } catch (error) {
+    console.error("Error:", error); // Log para depuración
+    res.status(500).json({ message: error.message });
+  }
 };

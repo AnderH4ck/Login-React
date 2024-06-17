@@ -17,10 +17,6 @@ function App() {
     <Routes>
       <Route path="/" element={<AuthLayout />}>
         <Route index element={<Login />} />
-<<<<<<< HEAD
-
-=======
->>>>>>> 2009a5fe11e6378870fb643f540967ccf139d2f0
         <Route path="recover-password" element={<RecoverPassword />} />
         <Route
           path="restablecer-password/:token"
