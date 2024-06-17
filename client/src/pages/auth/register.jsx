@@ -40,7 +40,7 @@ function Register() {
           return;
         }
     
-        // postLogin(data);
+        // postLogin(data); hola cuasa borrame
     
         console.log(data);
     };
