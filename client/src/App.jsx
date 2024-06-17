@@ -15,7 +15,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AuthLayout />}>
-        <Route path="login" element={<Login />} />
+        <Route index element={<Login />} />
 
         <Route path="recover-password" element={<RecoverPassword />} />
         <Route

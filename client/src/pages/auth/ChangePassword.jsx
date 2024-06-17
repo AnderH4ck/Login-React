@@ -7,42 +7,65 @@ import {
 } from "react-icons/ri";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
-const ChangePassword = () => {
+function ChangePassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
   const { token } = useParams();
-  if (token !== "30303030") {
-    navigate("/");
-  }
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmi = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if ([password, ConfirmPassword].includes("")) {
+    if ([password, confirmPassword].includes("")) {
       toast.error("😢Todos los campos son obligatorios", {
         theme: "dark",
       });
       return;
     }
 
-    if (password.length < 6) {
-      toast.error("😢 Los password son diferentes", {
+    if (password !== confirmPassword) {
+      toast.error("😢 Las contraseñas no coinciden", {
         theme: "dark",
       });
       return;
     }
 
-    toast.success("Tu password se cambio correctamente", {
-      theme: "dark",
-    });
+    if (password.length < 6) {
+      toast.error("😢 La contraseña debe tener al menos 6 caracteres", {
+        theme: "dark",
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3000/api/login", {
+        token,
+        password,
+      });
+
+      if (response.data.success) {
+        toast.success("Tu contraseña se cambió correctamente", {
+          theme: "dark",
+        });
+        navigate("/login");
+      } else {
+        toast.error(response.data.message || "Error al cambiar la contraseña", {
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      toast.error("Error al conectar con el servidor", {
+        theme: "dark",
+      });
+    }
   };
 
   return (
@@ -55,7 +78,7 @@ const ChangePassword = () => {
           Change Password
         </h1>
       </div>
-      <form onSubmit={handleSubmi} className="flex flex-col gap-4 mb-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-4">
         <div className="relative">
           <RiLockLine className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
           <input
@@ -84,7 +107,7 @@ const ChangePassword = () => {
             type={showPassword ? "text" : "password"}
             className="w-full border border-gray-200 outline-none py-2 px-8 rounded-lg"
             placeholder="Confirm Password"
-            value={ConfirmPassword}
+            value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
@@ -101,13 +124,13 @@ const ChangePassword = () => {
           )}
         </div>
         <div>
-          <button className="mt-2 bg-sky-600 yexy-white w-full py-2 px-6 rounded-lg hover:bg-sky-800 transition-colors">
+          <button className="mt-2 bg-sky-600 text-white w-full py-2 px-6 rounded-lg hover:bg-sky-800 transition-colors">
             Sign in
           </button>
         </div>
       </form>
     </div>
   );
-};
+}
 
 export default ChangePassword;
