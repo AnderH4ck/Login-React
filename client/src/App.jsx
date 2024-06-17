@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import AuthLayout from "./Layout/auth/AuthLayout";
 
 // Pages
+import Register from "./pages/auth/Register"
 import Login from "./pages/auth/Login";
 import RecoverPassword from "./pages/auth/RecoverPassword";
 import ChangePassword from "./pages/auth/ChangePassword";
@@ -16,13 +17,16 @@ function App() {
     <Routes>
       <Route path="/" element={<AuthLayout />}>
         <Route index element={<Login />} />
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2009a5fe11e6378870fb643f540967ccf139d2f0
         <Route path="recover-password" element={<RecoverPassword />} />
         <Route
           path="restablecer-password/:token"
           element={<ChangePassword />}
         />
-
+          <Route path="register" element={< Register/>} />
         <Route element={<ProtectedRoute />}>
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
