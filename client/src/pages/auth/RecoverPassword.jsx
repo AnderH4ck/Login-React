@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-function Login() {
+function RecoveryPassword() {
   const {
     register,
     handleSubmit,
@@ -121,11 +121,8 @@ function Login() {
           </button>
         </div>
       </form>
-    
     </div>
   );
-  
 }
 
-
-export default Login;
+export default RecoveryPassword;

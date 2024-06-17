@@ -4,7 +4,7 @@ import AuthLayout from "./Layout/auth/AuthLayout";
 
 // Pages
 import Login from "./pages/auth/Login";
-import ForgetPassword from "./pages/auth/ForgetPassword";
+import RecoverPassword from "./pages/auth/RecoverPassword";
 import ChangePassword from "./pages/auth/ChangePassword";
 
 import Error404 from "./pages/404";
@@ -17,7 +17,7 @@ function App() {
       <Route path="/" element={<AuthLayout />}>
         <Route path="login" element={<Login />} />
 
-        <Route path="olvide-password" element={<ForgetPassword />} />
+        <Route path="recover-password" element={<RecoverPassword />} />
         <Route
           path="restablecer-password/:token"
           element={<ChangePassword />}
