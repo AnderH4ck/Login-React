@@ -6,14 +6,12 @@ import {
   logout,
   profile,
   changeUserStatus,
+  verifyToken,
 } from "../controllers/auth.controller.js";
 
 import { authRequired } from "../middlewares/validateToken.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
-import {
-  registerSchema,
-  loginSchema,
-} from "../schemas/auth.schema.js";
+import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 
 //CREANDO OBJETO
 const router = Router();
@@ -26,6 +24,8 @@ router.post("/login", validateSchema(loginSchema), login);
 router.post("/change-user-status", changeUserStatus);
 
 router.post("/logout", logout);
+
+router.post("/verify", verifyToken);
 
 router.get("/profile", authRequired, profile);
 

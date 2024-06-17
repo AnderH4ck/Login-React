@@ -1,10 +1,12 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
+import jwt from "jsonwebtoken";
+import { TOKEN_SECRET } from "../config.js";
 
 // Registro de usuario
 export const register = async (req, res) => {
-  const { email, password, username, status } = req.body;
+  const { username, email, password, status } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -44,7 +46,15 @@ export const login = async (req, res) => {
 
     const token = await createAccessToken({ id: userFound._id });
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      sameSite: "none",
+      secure: false,
+      path: "/",
+    }, 
+    {
+      maxAge: 3600 * 24 * 60 * 60
+    }
+  );
     res.json({
       id: userFound._id,
       username: userFound.username,
@@ -103,4 +113,23 @@ export const changeUserStatus = async (req, res) => {
     console.error("Error:", error); // Log para depuración
     res.status(500).json({ message: error.message });
   }
+};
+
+export const verifyToken = async (req, res) => {
+  const { token } = req.cookies;
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+    if (err) return res.status(401).json({ message: "Unauthorized" });
+
+    const userFound = await user.findById(user.id);
+    if (!userFound) return res.status(401).json({ message: "Unauthorized" });
+
+    return res.json({
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+      status: userFound.status,
+    });
+  });
 };
