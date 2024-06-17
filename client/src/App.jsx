@@ -22,7 +22,6 @@ function App() {
         />
         <Route path="dashboard" element={<Dashboard />} />
       </Route>
-      <Route path="" element={<Error404 />} />
       <Route path="*" element={<Error404 />} />
     </Routes>
   );
