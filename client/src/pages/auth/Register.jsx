@@ -6,7 +6,6 @@ import {
   RiEyeOffLine,
   RiUserLine,
 } from "react-icons/ri";
-import { registerRequest } from "../../api/auth";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import axios from "axios";

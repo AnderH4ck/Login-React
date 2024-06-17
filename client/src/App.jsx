@@ -11,26 +11,29 @@ import ChangePassword from "./pages/auth/ChangePassword";
 import Error404 from "./pages/404";
 import Dashboard from "./pages/auth/dashboard";
 
-import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<AuthLayout />}>
-        <Route index element={<Login />} />
-        <Route path="recover-password" element={<RecoverPassword />} />
-        <Route
-          path="restablecer-password/:token"
-          element={<ChangePassword />}
-        />
-        <Route path="register" element={<Register />} />
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/recover-password" element={<RecoverPassword />} />
+          <Route
+            path="/restablecer-password/:token"
+            element={<ChangePassword />}
+          />
 
-        <Route element={<ProtectedRoute />}>
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+
+          <Route path="*" element={<Error404 />} />
         </Route>
-
-        <Route path="*" element={<Error404 />} />
-      </Route>
-    </Routes>
+      </Routes>
+    </AuthProvider>
   );
 }
 

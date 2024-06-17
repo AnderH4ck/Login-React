@@ -106,7 +106,7 @@ function RecoveryPassword() {
         </div>
         <div className="text-right">
           <Link
-            to="recover-password"
+            to="recovery-password"
             className="text-x.5 text-white hover:text-zinc-400 hover:underline transition-colors"
           >
             Did you forget your password?
