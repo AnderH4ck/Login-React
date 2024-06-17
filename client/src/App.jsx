@@ -23,6 +23,7 @@ function App() {
           element={<ChangePassword />}
         />
         <Route path="register" element={<Register />} />
+
         <Route element={<ProtectedRoute />}>
           <Route path="dashboard" element={<Dashboard />} />
         </Route>

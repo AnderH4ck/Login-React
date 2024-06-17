@@ -50,19 +50,23 @@ function Login() {
 
     postLogin(data);
 
-    console.log(data);
+    // console.log(data);
     // Aquí puedes llamar a tu función de autenticación como signin(data) si la tienes definida
   };
 
   return (
     <div className="bg-cyan-950 p-8 rounded-xl w-full md:w-96">
-        <h4 className="text-white font-bold text-5xl text-center">JAC</h4>
-        <h4 className="text-white text-1xl text-center p-3">Instant Messaging Service</h4>
+      <h4 className="text-white font-bold text-5xl text-center">JAC</h4>
+      <h4 className="text-white text-1xl text-center p-3">
+        Instant Messaging Service
+      </h4>
       <div className="flex items-center justify-center w-full p-3">
         <img className="w-20" src="./jac-logo-white.png" alt="" />
       </div>
       <div className="mb-10">
-        <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">login</h1>
+        <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">
+          login
+        </h1>
       </div>
 
       <form
@@ -121,11 +125,8 @@ function Login() {
           </button>
         </div>
       </form>
-    
     </div>
   );
-  
 }
-
 
 export default Login;
