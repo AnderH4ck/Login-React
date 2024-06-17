@@ -23,8 +23,8 @@ function App() {
           element={<ChangePassword />}
         />
         <Route path="register" element={<Register />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="dashboard" element={<Dashboard />} />
         </Route>
 
         <Route path="*" element={<Error404 />} />
