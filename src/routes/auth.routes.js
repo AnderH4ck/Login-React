@@ -25,7 +25,7 @@ router.post("/change-user-status", changeUserStatus);
 
 router.post("/logout", logout);
 
-router.post("/verify", verifyToken);
+
 
 router.get("/profile", authRequired, profile);
 

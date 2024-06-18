@@ -46,17 +46,12 @@ export const login = async (req, res) => {
 
     const token = await createAccessToken({ id: userFound._id });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "none",
-      secure: true,
-    }),
+    res.cookie("token", token);
     res.json({
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
       password: userFound.password,
-      status: userFound.status,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -110,6 +105,8 @@ export const changeUserStatus = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// verficar TOKEN
 
 export const verifyToken = async (req, res) => {
   const { token } = req.cookies;
