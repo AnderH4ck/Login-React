@@ -25,13 +25,12 @@ function App() {
             path="/restablecer-password/:token"
             element={<ChangePassword />}
           />
+        </Route>
 
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
-
           <Route path="*" element={<Error404 />} />
-        </Route>
       </Routes>
     </AuthProvider>
   );
