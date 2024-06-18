@@ -61,7 +61,7 @@ function Login() {
         Instant Messaging Service
       </h4>
       <div className="flex items-center justify-center w-full p-3">
-        <img className="w-20" src="./jac-logo-white.png" alt="" />
+        <img className="w-20 mr-3" src="./jac-logo-white.png" alt="" />
       </div>
       <div className="mb-10">
         <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">
@@ -110,7 +110,7 @@ function Login() {
         </div>
         <div className="text-right">
           <Link
-            to="recovery-password"
+            to="/recovery"
             className="text-x.5 text-white hover:text-zinc-400 hover:underline transition-colors"
           >
             Did you forget your password?

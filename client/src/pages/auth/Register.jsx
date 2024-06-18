@@ -60,7 +60,7 @@ function Register() {
         Instant Messaging Service
       </h4>
       <div className="flex items-center justify-center w-full p-3">
-        <img className="w-20" src="./jac-logo-white.png" alt="" />
+        <img className="w-20 mr-6" src="./jac-logo-white.png" alt="" />
       </div>
       <div className="mb-10">
         <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">

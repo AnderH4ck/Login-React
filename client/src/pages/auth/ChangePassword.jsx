@@ -1,116 +1,61 @@
 import React, { useState } from "react";
-import {
-  RiMailLine,
-  RiLockLine,
-  RiEyeLine,
-  RiEyeOffLine,
-} from "react-icons/ri";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { RiLockLine, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-function ChangePassword() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const navigate = useNavigate();
+function ResetPassword() {
   const { token } = useParams();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if ([password, confirmPassword].includes("")) {
-      toast.error("😢Todos los campos son obligatorios", {
-        theme: "dark",
-      });
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error("😢 Las contraseñas no coinciden", {
-        theme: "dark",
-      });
-      return;
-    }
-
-    if (password.length < 6) {
-      toast.error("😢 La contraseña debe tener al menos 6 caracteres", {
-        theme: "dark",
-      });
-      return;
-    }
-
+  const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/login", {
-        token,
-        password,
+      const res = await axios.post(`http://localhost:3000/api/reset-password/${token}`, { token, ...data });
+      toast.success("🔑 Contraseña restablecida con éxito", {
+        theme: "dark",
       });
-
-      if (response.data.success) {
-        toast.success("Tu contraseña se cambió correctamente", {
-          theme: "dark",
-        });
-        navigate("/login");
-      } else {
-        toast.error(response.data.message || "Error al cambiar la contraseña", {
-          theme: "dark",
-        });
-      }
+      console.log(res);
     } catch (error) {
-      toast.error("Error al conectar con el servidor", {
+      console.log(error);
+      toast.error("🚨 Error al restablecer la contraseña", {
         theme: "dark",
       });
     }
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg w-full md:w-96">
+    <div className="bg-cyan-950 p-8 rounded-xl w-full md:w-96">
+      <h4 className="text-white font-bold text-5xl text-center">JAC</h4>
+      <h4 className="text-white text-1xl text-center p-3">Instant Messaging Service</h4>
       <div className="flex items-center justify-center w-full p-3">
-        <img className="w-10 " src="./jac-logo-dark.png" alt="" />
+        <img className="w-20 mr-6" src="./jac-logo-white.png" alt="" />
       </div>
       <div className="mb-10">
-        <h1 className="text-3xl uppercase font-bold text-center">
-          Change Password
-        </h1>
+        <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">Restablecer Contraseña</h1>
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-4">
+
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 mb-4">
         <div className="relative">
           <RiLockLine className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
           <input
             type={showPassword ? "text" : "password"}
+            {...register("newPassword", { required: "La nueva contraseña es obligatoria", minLength: { value: 6, message: "La contraseña debe tener al menos 6 caracteres" } })}
             className="w-full border border-gray-200 outline-none py-2 px-8 rounded-lg"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Nueva Contraseña"
           />
-
-          {showPassword ? (
-            <RiEyeOffLine
-              onClick={handleShowPassword}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:cursor-pointer"
-            />
-          ) : (
-            <RiEyeLine
-              onClick={handleShowPassword}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:cursor-pointer"
-            />
+          {errors.newPassword && (
+            <span className="text-red-500">{errors.newPassword.message}</span>
           )}
-        </div>
-        <div className="relative">
-          <RiLockLine className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
-          <input
-            type={showPassword ? "text" : "password"}
-            className="w-full border border-gray-200 outline-none py-2 px-8 rounded-lg"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-
           {showPassword ? (
             <RiEyeOffLine
               onClick={handleShowPassword}
@@ -124,8 +69,11 @@ function ChangePassword() {
           )}
         </div>
         <div>
-          <button className="mt-2 bg-sky-600 text-white w-full py-2 px-6 rounded-lg hover:bg-sky-800 transition-colors">
-            Sign in
+          <button
+            type="submit"
+            className="font-bold text-1xl mt-3 bg-white text-black w-full py-2 px-x6 rounded-lg hover:bg-cyan-100 transition-colors-transform transform hover:scale-110"
+          >
+            Restablecer Contraseña
           </button>
         </div>
       </form>
@@ -133,4 +81,4 @@ function ChangePassword() {
   );
 }
 
-export default ChangePassword;
+export default ResetPassword;
