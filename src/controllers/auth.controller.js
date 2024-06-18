@@ -129,6 +129,3 @@ export const verifyToken = async (req, res) => {
 
 // formulario para restablecer contraseña
 
-export const restablecerContraseña = (req, res) => {
-  res.render("restablecerContrase");
-};

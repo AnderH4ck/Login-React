@@ -1,14 +1,11 @@
+// Login.jsx
 import React, { useState } from "react";
-import {
-  RiMailLine,
-  RiLockLine,
-  RiEyeLine,
-  RiEyeOffLine,
-} from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { RiMailLine, RiLockLine, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const {
@@ -17,21 +14,15 @@ function Login() {
     formState: { errors },
   } = useForm();
 
+  const { signin } = useAuth();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const postLogin = async (data) => {
-    try {
-      const res = await axios.post("http://localhost:3000/api/login", data);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { email, password } = data;
 
     if ([email, password].includes("")) {
@@ -48,10 +39,13 @@ function Login() {
       return;
     }
 
-    postLogin(data);
-
-    // console.log(data);
-    // Aquí puedes llamar a tu función de autenticación como signin(data) si la tienes definida
+    try {
+      await signin(data);
+      // Redirige al dashboard después de iniciar sesión exitosamente
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

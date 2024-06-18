@@ -7,7 +7,6 @@ import {
   profile,
   changeUserStatus,
   verifyToken,
-  restablecerContraseña,
 } from "../controllers/auth.controller.js";
 
 import { authRequired } from "../middlewares/validateToken.js";
@@ -26,8 +25,7 @@ router.post("/change-user-status", changeUserStatus);
 
 router.post("/logout", logout);
 
-// formulario para restablecer contraseña
-router.get("/restablecer", restablecerContraseña);
+
 
 router.get("/profile", authRequired, profile);
 
