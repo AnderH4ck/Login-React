@@ -5,7 +5,7 @@ export const connectDB = async () => {
     await mongoose.connect(
       "mongodb+srv://anderperu2005:dJRtQukD5MrfTBcJ@jac.hidhoad.mongodb.net/db_jac?retryWrites=true&w=majority&appName=jac"
     );
-    console.log(">>>> BD CONECTADA <<<<");
+    console.log(">>>> BASE DE DATOS CONECTADA <<<<");
   } catch (error) {
     console.log(error);
   }

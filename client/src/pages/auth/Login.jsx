@@ -26,7 +26,6 @@ function Login() {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
   const onSubmit = async (data) => {
     const { email, password } = data;
 

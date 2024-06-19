@@ -1,11 +1,9 @@
-// RecoveryPassword.js
-
 import React from "react";
 import { RiMailLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { requestPasswordResetRequest } from "../../api/auth";
 
 function RecoveryPassword() {
   const {
@@ -16,15 +14,32 @@ function RecoveryPassword() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3000/api/recovery", data);
-      toast.success("📧 Revisa tu correo para restablecer tu contraseña", {
-        theme: "dark",
-      });
-      console.log(res);
+      const response = await requestPasswordResetRequest(data.email);
+      console.log(response.data);
+
+      toast.success(
+        "Correo de restablecimiento enviado. Por favor, revisa tu bandeja de entrada.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
     } catch (error) {
-      console.log(error);
-      toast.error("🚨 Error al enviar el correo de recuperación", {
-        theme: "dark",
+      console.error(error.response.data);
+
+      toast.error("Error al enviar el correo. Por favor, intenta nuevamente.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
   };
@@ -36,14 +51,13 @@ function RecoveryPassword() {
         Instant Messaging Service
       </h4>
       <div className="flex items-center justify-center w-full p-3">
-        <img className="w-20 mr-6" src="./jac-logo-white.png" alt="" />
+        <img className="w-20 mr-6" src="./jac-logo-white.png" alt="Logo" />
       </div>
       <div className="mb-10">
         <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">
           Recuperar Contraseña
         </h1>
       </div>
-
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 mb-4"
@@ -52,7 +66,7 @@ function RecoveryPassword() {
           <RiMailLine className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
           <input
             type="email"
-            {...register("email", { required: "El email es obligatorio" })}
+            {...register("email")}
             className="w-full border border-gray-200 outline-none py-2 px-8 rounded-lg"
             placeholder="Email"
           />
