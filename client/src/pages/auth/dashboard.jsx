@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-cyan-100">
-      <div className="border border-black w-96 bg-cyan-950 p-6 rounded-3xl mt-3 mb-3 ml-3">
+      <div className="border border-black w-96 bg-cyan-950 p-6 rounded-3xl mt-5 mb-5 ml-5">
   
         <div className="flex flex-col items-center justify-center p-1 mb-4 ">
 

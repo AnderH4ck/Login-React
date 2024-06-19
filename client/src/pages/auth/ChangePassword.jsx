@@ -33,11 +33,11 @@ function ResetPassword() {
         Instant Messaging Service
       </h4>
       <div className="flex items-center justify-center w-full p-3">
-        <img className="w-20 mr-3" src="./jac-logo-white.png" alt="logo" />
+        <img className="w-20 mr-3" src="/jac.svg" alt="" />
       </div>
       <div className="mb-10">
         <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">
-          Restablecer Contraseña
+          Restore Password
         </h1>
       </div>
       <form
@@ -53,7 +53,7 @@ function ResetPassword() {
               minLength: { value: 6, message: "Al menos 6 caracteres" },
             })}
             className="w-full border border-gray-200 outline-none py-2 px-8 rounded-lg"
-            placeholder="Nueva Contraseña"
+            placeholder="New Password"
           />
           {errors.newPassword && (
             <span className="text-red-500 absolute top-full left-0">
@@ -77,7 +77,7 @@ function ResetPassword() {
             type="submit"
             className="font-bold text-1xl mt-3 bg-white text-black w-full py-2 px-6 rounded-lg hover:bg-cyan-100 transition-colors-transform transform hover:scale-110"
           >
-            Restablecer Contraseña
+            SAVE
           </button>
         </div>
       </form>

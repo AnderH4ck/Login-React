@@ -1,6 +1,6 @@
 import React from "react";
 import { RiMailLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { requestPasswordResetRequest } from "../../api/auth";
@@ -12,14 +12,16 @@ function RecoveryPassword() {
     formState: { errors },
   } = useForm();
 
+ 
   const onSubmit = async (data) => {
     try {
       const response = await requestPasswordResetRequest(data.email);
       console.log(response.data);
 
       toast.success(
-        "Correo de restablecimiento enviado. Por favor, revisa tu bandeja de entrada.",
+        "Reset email sent. Please check your inbox.",
         {
+          theme:"dark",
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -32,7 +34,8 @@ function RecoveryPassword() {
     } catch (error) {
       console.error(error.response.data);
 
-      toast.error("Error al enviar el correo. Por favor, intenta nuevamente.", {
+      toast.error("Error sending email. Please try again.", {
+        theme:"dark",
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -43,6 +46,16 @@ function RecoveryPassword() {
       });
     }
   };
+
+  const navigate = useNavigate();
+  try {
+    
+    // Redirige al login luego del envio del correo
+    navigate("/login");
+  } catch (error) {
+    console.log(error)
+  }
+
 
   return (
     <div className="bg-cyan-950 p-8 rounded-xl w-full md:w-96">
@@ -55,7 +68,7 @@ function RecoveryPassword() {
       </div>
       <div className="mb-10">
         <h1 className="text-white text-4xl p-2 uppercase font-bold text-center">
-          Recuperar Contraseña
+          Recovery Password
         </h1>
       </div>
       <form
@@ -75,19 +88,20 @@ function RecoveryPassword() {
           )}
         </div>
         <div>
-          <button
+          <button 
             type="submit"
             className="font-bold text-1xl mt-3 bg-white text-black w-full py-2 px-x6 rounded-lg hover:bg-cyan-100 transition-colors-transform transform hover:scale-110"
           >
-            ENVIAR
+            SEND
           </button>
+          
         </div>
         <div className="text-center mt-4">
           <Link
             to="/login"
             className="text-white hover:text-zinc-400 hover:underline transition-colors"
           >
-            ¿Ya tienes cuenta? Inicia sesión
+            Do you already have an account? Log in
           </Link>
         </div>
       </form>

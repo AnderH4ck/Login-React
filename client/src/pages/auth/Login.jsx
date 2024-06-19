@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useState } from "react";
 import {
   RiMailLine,
@@ -53,6 +52,7 @@ function Login() {
 
   return (
     <div className="bg-cyan-950 p-8 rounded-xl w-full md:w-96">
+
       <h4 className="text-white font-bold text-5xl text-center">JAC</h4>
       <h4 className="text-white text-1xl text-center p-3">
         Instant Messaging Service
