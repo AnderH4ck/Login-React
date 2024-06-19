@@ -159,12 +159,18 @@ export const requestPasswordReset = async (req, res) => {
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
-      subject: "Reset your password",
+      subject: "Reset Your Password for JAC Instant Messaging Service",
       html: `
-        <h1>Reset your password</h1>
-        <p>Click the link below to reset your password:</p>
-        <a href="http://localhost:5173/resetPassword/${token}">Reset Password Link</a>
-      `,
+        <h1>Reset Your Password</h1>
+        <h3>Dear Usuario,</h3>
+        <p>We have received a request to reset your password for your JAC Instant Messaging Service account. To proceed with resetting your password, please click on the link below:</p>
+        <a href="http://localhost:5173/reset-password/${token}">click here to reset your password</a>
+        <br></br> 
+        <p>If you did not request this password reset, please disregard this email. Your account security is important to us, so we recommend choosing a strong password that you haven't used before.</p> 
+        <br></br> 
+        <p>Thank you,</p> 
+        <h4>JAC Instant Messaging Service</h4>       
+        `,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
