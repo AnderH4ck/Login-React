@@ -163,7 +163,7 @@ export const requestPasswordReset = async (req, res) => {
       html: `
         <h1>Reset your password</h1>
         <p>Click the link below to reset your password:</p>
-        <a href="http://localhost:5173/resetPassword/${token}">Reset Password Link</a>
+        <a href="http://localhost:5173/reset-password/${token}">Reset Password Link</a>
       `,
     };
 

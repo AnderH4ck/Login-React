@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiLockLine, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { resetPasswordRequest } from "../../api/auth";
 
 function ResetPassword() {
   const { token } = useParams();
   const { register, handleSubmit, formState: { errors } } = useForm();
-
   const [showPassword, setShowPassword] = useState(false);
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleShowPassword = () => setShowPassword(!showPassword);
 
   const onSubmit = async (data) => {
     try {
@@ -38,7 +35,10 @@ function ResetPassword() {
           <RiLockLine className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
           <input
             type={showPassword ? "text" : "password"}
-            {...register("newPassword", { required: "La nueva contraseña es obligatoria", minLength: { value: 6, message: "La contraseña debe tener al menos 6 caracteres" } })}
+            {...register("newPassword", { 
+              required: "La nueva contraseña es obligatoria", 
+              minLength: { value: 6, message: "La contraseña debe tener al menos 6 caracteres" } 
+            })}
             className="w-full border border-gray-200 outline-none py-2 px-8 rounded-lg"
             placeholder="Nueva Contraseña"
           />
@@ -56,7 +56,10 @@ function ResetPassword() {
           )}
         </div>
         <div>
-          <button type="submit" className="font-bold text-1xl mt-3 bg-white text-black w-full py-2 px-x6 rounded-lg hover:bg-cyan-100 transition-colors-transform transform hover:scale-110">
+          <button 
+            type="submit" 
+            className="font-bold text-1xl mt-3 bg-white text-black w-full py-2 px-x6 rounded-lg hover:bg-cyan-100 transition-colors-transform transform hover:scale-110"
+          >
             Restablecer Contraseña
           </button>
         </div>
