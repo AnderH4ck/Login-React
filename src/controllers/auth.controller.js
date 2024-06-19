@@ -201,7 +201,7 @@ export const resetPassword = async (req, res) => {
     user.resetToken = null;
     await user.save();
 
-    res.json({ message: "Password reset successful" });
+    res.json({ message: "Contraseña cambiada con exito" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error" });
