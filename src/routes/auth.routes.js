@@ -26,6 +26,7 @@ router.post("/login", validateSchema(loginSchema), login);
 router.post("/change-user-status", changeUserStatus);
 
 router.post("/request-password-reset", requestPasswordReset);
+
 router.post("/reset-password/:token", resetPassword);
 
 router.post("/logout", logout);
